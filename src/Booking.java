@@ -1,22 +1,61 @@
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Booking {
-    private Date timeOfBooking;
-    private RoomBooking roomBooking;
+    public Booking(String timeOfBooking, String employee) {
+        super();
+        //2016-07-18 10:17:06
+        if (!Booking.isValid(timeOfBooking, employee)) {
+            throw new IllegalArgumentException("Bad strings");
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        this.timeOfBooking = LocalTime.parse(timeOfBooking, formatter);
+        this.dateOfBooking = LocalDate.parse(timeOfBooking, formatter);
+        this.setEmployee(employee);
+    }
 
-    public Date getTimeOfBooking() {
+    private String employee;
+    private LocalTime timeOfBooking;
+    private LocalDate dateOfBooking;
+
+    public LocalTime getTimeOfBooking() {
         return timeOfBooking;
     }
 
-    public void setTimeOfBooking(Date timeOfBooking) {
-        this.timeOfBooking = timeOfBooking;
+    public String getEmployee() {
+        return employee;
     }
 
-    public RoomBooking getRoomBooking() {
-        return roomBooking;
+    public void setEmployee(String employee) {
+        this.employee = employee;
     }
 
-    public void setRoomBooking(RoomBooking roomBooking) {
-        this.roomBooking = roomBooking;
+    public static boolean isValid(String timeOfBooking, String employee) {
+        try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        LocalTime.parse(timeOfBooking, formatter);
+        LocalDate.parse(timeOfBooking, formatter);
+        } catch (Exception e) {
+            return false;
+        }
+        if (employee == null || employee.length() != 6) return false;
+        return true;
     }
+
+    @Override
+    public String toString() {
+        return "Booking [employee=" + employee + ", timeOfBooking=" + timeOfBooking
+                + ", dateOfBooking=" + dateOfBooking + "]";
+    }
+
+    public LocalDate getDateOfBooking() {
+        return dateOfBooking;
+    }
+
+    public void setDateOfBooking(LocalDate dateOfBooking) {
+        this.dateOfBooking = dateOfBooking;
+    }
+
 }
