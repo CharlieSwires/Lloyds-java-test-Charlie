@@ -88,7 +88,7 @@ public class BookingApp {
             +startOfOneHourBlock,room);
         }
         int after = roomBookings.getRoom().size();                            
-        if (before == after) {
+        if ((after - before) != room.getDuration()) {
             throw new RuntimeException("duplicate room reservation time:"+""+room.getStartDate()
             +room.getStartTime()+currentEmployee);
 
