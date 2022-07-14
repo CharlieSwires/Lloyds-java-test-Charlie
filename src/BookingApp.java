@@ -79,7 +79,7 @@ public class BookingApp {
         int before = roomBookings.getRoom().size();
         for (int i = 0; i < room.getDuration(); i++) {
             LocalTime startOfOneHourBlock = room.getStartTime().plusHours((long)i);
-            if (new DayTime(startOfOneHourBlock.getHour() > EIGHT_HOUR_DAY ?
+            if (new DayTime(startOfOneHourBlock.getHour() > 9 ?
                     ""+startOfOneHourBlock.getHour()+"00":
                         "0"+startOfOneHourBlock.getHour()+"00").isGreater(edt)) {
                 throw new RuntimeException("block requested after hours specified");
