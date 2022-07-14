@@ -4,6 +4,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class Booking {
+    private static final int LENGTH_OF_EMPLOYEE = 6;
+
     public Booking(String timeOfBooking, String employee) {
         super();
         //2016-07-18 10:17:06
@@ -40,7 +42,7 @@ public class Booking {
         } catch (Exception e) {
             return false;
         }
-        if (employee == null || employee.length() != 6) return false;
+        if (employee == null || employee.length() != LENGTH_OF_EMPLOYEE) return false;
         return true;
     }
 

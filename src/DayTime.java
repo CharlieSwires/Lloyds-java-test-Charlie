@@ -1,7 +1,6 @@
 
 public class DayTime {
     private String timehhmm;
-    private int timeInMins;
 
     public DayTime(CharSequence subSequence) {
         timehhmm = (String)subSequence;
@@ -46,7 +45,7 @@ public class DayTime {
     
     protected static int timeInMinsMethod(String sample) {
         int result;
-        if(!new DayTime(sample).isValid()) throw new IllegalArgumentException("time invalid");
+        if(!new DayTime(sample).isValid()) throw new IllegalArgumentException("time invalid:"+sample);
 
         result = sample.charAt(3) - '0' +
                 (sample.charAt(2) - '0') * 10 +

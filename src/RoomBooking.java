@@ -1,11 +1,10 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Locale;
-import java.util.Set;
 
 public class RoomBooking {
+    private static final int LINE_LENGTH = 18;
     private LocalDate startDate;
     private LocalTime startTime;
     private Integer duration;
@@ -16,16 +15,16 @@ public class RoomBooking {
         super();
         if (isValid(input)) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.ENGLISH);
-            String dateTime = input.substring(0,16);
+            String dateTime = input.substring(0,LINE_LENGTH-2);
             this.startTime = LocalTime.parse(dateTime, formatter);
             this.startDate=LocalDate.parse(dateTime, formatter);
-            duration = input.charAt(17) - '0';
+            duration = input.charAt(LINE_LENGTH-1) - '0';
         } else {
             throw new IllegalArgumentException("bad string:"+input+", expected:"+"2016-07-21 09:00 2");
         }
     }
     protected static boolean isValid(String input) {
-        if (input.length() != 18) {
+        if (input.length() != LINE_LENGTH) {
           return false;  
         }
         try {
@@ -36,7 +35,7 @@ public class RoomBooking {
         } catch (Exception e) {
             return false;
         }
-        if (input.charAt(17) < '1' || input.charAt(17) > '8') {
+        if (input.charAt(LINE_LENGTH-1) < '1' || input.charAt(LINE_LENGTH-1) > '8') {
             return false;
         }
         return true;

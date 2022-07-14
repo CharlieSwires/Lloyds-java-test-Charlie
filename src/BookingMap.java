@@ -1,14 +1,13 @@
-import java.util.Date;
 import java.util.Map;
 
 public class BookingMap {
-    private Map<Date,Booking> bookings;
+    private Map<String,Booking> bookings;
 
-    public Map<Date, Booking> getBookings() {
+    public Map<String, Booking> getBookings() {
         return bookings;
     }
 
-    public void setBookings(Map<Date, Booking> bookings) {
+    public void setBookings(Map<String, Booking> bookings) {
         this.bookings = bookings;
     }
 }
