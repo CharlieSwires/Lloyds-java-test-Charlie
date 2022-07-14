@@ -111,14 +111,20 @@ public class BookingApp {
         });
         LocalDate currentDay = null;
         String currentEmployee2 = null;
+        int countDown = 0;
         for (String key : roomBookingList) {
             RoomBooking rb = roomBookings.getRoom().get(key);
             if (currentDay == null || !currentDay.equals(rb.getStartDate())) {
                 currentDay = rb.getStartDate();
                 System.out.println(currentDay);
             }
-            if (currentEmployee2 == null || !currentEmployee2.equals(rb.getEmployee())) {
+            if (countDown != 0) {
+                countDown--;
+                continue;
+            }
+            if (currentEmployee2 == null || countDown == 0) {
                 currentEmployee2 = rb.getEmployee();
+                countDown = rb.getDuration()-1;
                 System.out.println(rb.getStartTime()+" "+rb.getStartTime().plusHours(rb.getDuration())+" "+rb.getEmployee());
             }
         }
