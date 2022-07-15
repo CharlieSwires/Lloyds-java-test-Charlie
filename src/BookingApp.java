@@ -123,6 +123,7 @@ public class BookingApp {
             if (currentDay == null || !currentDay.equals(rb.getStartDate())) {
                 currentDay = rb.getStartDate();
                 bw.write(currentDay+"\n");
+                System.out.print(currentDay+"\n");
             }
             if (countDown != 0) {
                 countDown--;
@@ -132,6 +133,7 @@ public class BookingApp {
                 currentEmployee2 = rb.getEmployee();
                 countDown = rb.getDuration()-1;
                 bw.write(rb.getStartTime()+" "+rb.getStartTime().plusHours(rb.getDuration())+" "+rb.getEmployee()+"\n");
+                System.out.print(rb.getStartTime()+" "+rb.getStartTime().plusHours(rb.getDuration())+" "+rb.getEmployee()+"\n");
             }
         }
         bw.close();
