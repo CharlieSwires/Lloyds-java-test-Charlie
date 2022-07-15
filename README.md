@@ -6,4 +6,8 @@ Generating JavaDoc
 
 Building/Running
 ================
-<p>Eclipse with Junit 5</p>
+<p>Eclipse with Junit 5 run BookingApp args = {"test.txt"}</p>
+
+Testing/Running
+================
+<p>Eclipse with Junit 5 run AllTests</p>

@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -21,9 +24,9 @@ public class BookingApp {
     static String currentEmployee = null;
     static BookingMap bookings = new BookingMap();
     static RoomBookingMap roomBookings = new RoomBookingMap();
-    static DayTime sdt = new DayTime("0900");
-    static DayTime edt = new DayTime("1800");
-    static int lineCount = 0;
+    static DayTime sdt;
+    static DayTime edt;
+    static int lineCount;
     static String line;
     private static final int FIRST_LINE = 0;
     private static final int LINE_LENGTH_FIRST_LINE = 9;
@@ -97,8 +100,11 @@ public class BookingApp {
     
     /**
      * Sorts and prints result
+     * @throws IOException 
      */
-    private static void printResult() {
+    private static void printResult() throws IOException {
+        FileWriter fw = new FileWriter(new File("testOut.txt"));
+        BufferedWriter bw = new BufferedWriter(fw);
         List<String> roomBookingList = new ArrayList<>();
         roomBookingList.addAll(roomBookings.getRoom().keySet());
         roomBookingList.sort(new Comparator<String>() {
@@ -116,7 +122,7 @@ public class BookingApp {
             RoomBooking rb = roomBookings.getRoom().get(key);
             if (currentDay == null || !currentDay.equals(rb.getStartDate())) {
                 currentDay = rb.getStartDate();
-                System.out.println(currentDay);
+                bw.write(currentDay+"\n");
             }
             if (countDown != 0) {
                 countDown--;
@@ -125,9 +131,10 @@ public class BookingApp {
             if (currentEmployee2 == null || countDown == 0) {
                 currentEmployee2 = rb.getEmployee();
                 countDown = rb.getDuration()-1;
-                System.out.println(rb.getStartTime()+" "+rb.getStartTime().plusHours(rb.getDuration())+" "+rb.getEmployee());
+                bw.write(rb.getStartTime()+" "+rb.getStartTime().plusHours(rb.getDuration())+" "+rb.getEmployee()+"\n");
             }
         }
+        bw.close();
     }
 
     /**
@@ -135,12 +142,15 @@ public class BookingApp {
      * @param args
      */
     public static void main(String args[]) {
+        sdt = new DayTime("0900");
+        edt = new DayTime("1800");
+        lineCount = 0;
         es.setEmployees(new HashSet<String>());
         bookings.setBookings(new HashMap<String,Booking>());
         roomBookings.setRoom(new HashMap<String,RoomBooking>());
 
         try {
-            FileReader fr = new FileReader("test.txt");
+            FileReader fr = new FileReader(args[0]);
             br = new BufferedReader(fr);
 
             while ((line = br.readLine())!= null) {
